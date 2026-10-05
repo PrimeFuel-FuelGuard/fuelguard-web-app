@@ -1,0 +1,227 @@
+<div class="landing-container">
+  <app-toolbar></app-toolbar>
+
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <mat-icon class="badge-icon">sensors</mat-icon>
+          <span>{{ 'home.badge' | translate }}</span>
+        </div>
+
+        <h1 class="hero-title">
+          {{ 'home.title' | translate }}
+          <span class="gradient-text">Enterprise</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          {{ 'home.content' | translate }}
+        </p>
+
+        <div class="hero-actions">
+          <a mat-flat-button routerLink="/register/buyer" class="btn-primary-action">
+            <mat-icon>storefront</mat-icon>
+            {{ 'home.buyers-btn' | translate }}
+          </a>
+          <a mat-stroked-button routerLink="/register/distributor" class="btn-secondary-action">
+            <mat-icon>local_shipping</mat-icon>
+            {{ 'home.suppliers-btn' | translate }}
+          </a>
+        </div>
+
+        <div class="hero-login-hint">
+          <span>¿Ya tienes una cuenta operativa?</span>
+          <a routerLink="/login" class="link-signin">
+            <mat-icon>login</mat-icon>
+            {{ 'home.login-btn' | translate }}
+          </a>
+        </div>
+
+        <!-- Metrics Strip -->
+        <div class="metrics-strip">
+          <div class="metric-item">
+            <span class="metric-val">{{ 'home.stats-uptime' | translate }}</span>
+            <span class="metric-sub">{{ 'home.stats-uptime-sub' | translate }}</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-val">{{ 'home.stats-reduction' | translate }}</span>
+            <span class="metric-sub">{{ 'home.stats-reduction-sub' | translate }}</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-val">{{ 'home.stats-response' | translate }}</span>
+            <span class="metric-sub">{{ 'home.stats-response-sub' | translate }}</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-val">{{ 'home.stats-traceability' | translate }}</span>
+            <span class="metric-sub">{{ 'home.stats-traceability-sub' | translate }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Section -->
+      <div class="hero-visual">
+        <div class="image-wrapper">
+          <img src="/fuel-truck-delivery.jpg" alt="FuelGuard Cisterna de combustible y fosa industrial" class="hero-main-image"/>
+          
+          <!-- Floating Live Telemetry Card -->
+          <div class="telemetry-card">
+            <div class="telemetry-header">
+              <div class="pulse-indicator">
+                <span class="pulse-dot"></span>
+                <span class="pulse-ring"></span>
+              </div>
+              <span class="device-tag">IoT TK-04 • Diésel B5</span>
+              <span class="status-pill status-optimal">ÓPTIMO</span>
+            </div>
+            <div class="telemetry-level">
+              <div class="level-meta">
+                <span class="level-label">Nivel de Fosa</span>
+                <span class="level-value">78.5% (15,700 L)</span>
+              </div>
+              <div class="level-bar-track">
+                <div class="level-bar-fill" style="width: 78.5%"></div>
+              </div>
+            </div>
+            <div class="telemetry-footer">
+              <mat-icon class="telemetry-footer-icon">verified_user</mat-icon>
+              <span>Geocerca de descarga verificada</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features Grid: Core Operational Pillars -->
+  <section class="features-section">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">CAPACIDADES INDUSTRIALES</span>
+        <h2 class="section-title">Automatización de Extremo a Extremo</h2>
+        <p class="section-desc">Diseñado bajo principios de Arquitectura Limpia y DDD para garantizar trazabilidad, resiliencia y cero pérdidas operativas.</p>
+      </div>
+
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon-box box-blue">
+            <mat-icon>sensors</mat-icon>
+          </div>
+          <h3 class="feature-title">{{ 'home.feature-iot-title' | translate }}</h3>
+          <p class="feature-desc">{{ 'home.feature-iot-desc' | translate }}</p>
+          <div class="feature-badge">Telemetría Ultrasónica</div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon-box box-indigo">
+            <mat-icon>local_shipping</mat-icon>
+          </div>
+          <h3 class="feature-title">{{ 'home.feature-fleet-title' | translate }}</h3>
+          <p class="feature-desc">{{ 'home.feature-fleet-desc' | translate }}</p>
+          <div class="feature-badge">Algoritmo de Despacho</div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon-box box-emerald">
+            <mat-icon>fmd_good</mat-icon>
+          </div>
+          <h3 class="feature-title">{{ 'home.feature-safety-title' | translate }}</h3>
+          <p class="feature-desc">{{ 'home.feature-safety-desc' | translate }}</p>
+          <div class="feature-badge">Control de Descarga</div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon-box box-amber">
+            <mat-icon>verified_user</mat-icon>
+          </div>
+          <h3 class="feature-title">{{ 'home.feature-orders-title' | translate }}</h3>
+          <p class="feature-desc">{{ 'home.feature-orders-desc' | translate }}</p>
+          <div class="feature-badge">Control Anti-Duplicados</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Role Portals Section -->
+  <section class="portals-section">
+    <div class="section-container">
+      <div class="portals-grid">
+        <div class="portal-card portal-buyer">
+          <div class="portal-header">
+            <mat-icon class="portal-icon">apartment</mat-icon>
+            <div>
+              <span class="portal-tag">PORTAL CLIENTE</span>
+              <h3 class="portal-title">{{ 'home.for-buyers-title' | translate }}</h3>
+            </div>
+          </div>
+          <p class="portal-desc">{{ 'home.for-buyers-desc' | translate }}</p>
+          <ul class="portal-benefits">
+            <li><mat-icon>check_circle</mat-icon> Monitoreo de tanques sin varillaje manual</li>
+            <li><mat-icon>check_circle</mat-icon> Umbrales de recarga crítica personalizables</li>
+            <li><mat-icon>check_circle</mat-icon> Trazabilidad satelital del pedido en ruta</li>
+          </ul>
+          <a mat-flat-button routerLink="/register/buyer" class="portal-btn">
+            Registrar Empresa Compradora
+            <mat-icon>arrow_forward</mat-icon>
+          </a>
+        </div>
+
+        <div class="portal-card portal-supplier">
+          <div class="portal-header">
+            <mat-icon class="portal-icon">store</mat-icon>
+            <div>
+              <span class="portal-tag">PORTAL DISTRIBUIDOR</span>
+              <h3 class="portal-title">{{ 'home.for-suppliers-title' | translate }}</h3>
+            </div>
+          </div>
+          <p class="portal-desc">{{ 'home.for-suppliers-desc' | translate }}</p>
+          <ul class="portal-benefits">
+            <li><mat-icon>check_circle</mat-icon> Anticipación de demanda de tanques en fosa</li>
+            <li><mat-icon>check_circle</mat-icon> Asignación automatizada de flota y conductores</li>
+            <li><mat-icon>check_circle</mat-icon> Evidencias digitales de descarga segura</li>
+          </ul>
+          <a mat-flat-button routerLink="/register/distributor" class="portal-btn portal-btn-alt">
+            Registrar como Distribuidor
+            <mat-icon>arrow_forward</mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enterprise Footer -->
+  <footer class="landing-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="brand-line">
+          <mat-icon class="brand-icon">local_gas_station</mat-icon>
+          <span class="brand-text">FuelGuard</span>
+        </div>
+        <p class="footer-tagline">Plataforma IoT de Gestión y Despacho Automatizado de Hidrocarburos.</p>
+        <span class="tech-badge">Arquitectura Hexagonal • Spring Boot Backend • Angular 21</span>
+      </div>
+
+      <div class="footer-links">
+        <div class="link-column">
+          <h4>Plataforma</h4>
+          <a routerLink="/login">Iniciar Sesión</a>
+          <a routerLink="/register/buyer">Registro Comprador</a>
+          <a routerLink="/register/distributor">Registro Distribuidor</a>
+        </div>
+        <div class="link-column">
+          <h4>Módulos</h4>
+          <span>Telemetría de Tanques</span>
+          <span>Despacho & Rutas</span>
+          <span>Recomendación de Flota</span>
+          <span>Geocercas de Descarga</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 FuelGuard Platform. Todos los derechos reservados. Cumplimiento de estándares de seguridad industrial.</p>
+    </div>
+  </footer>
+</div>

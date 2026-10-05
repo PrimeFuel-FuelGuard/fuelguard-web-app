@@ -1,0 +1,116 @@
+<!-- TOOLBAR FIJO -->
+<mat-toolbar class="toolbar">
+  <button mat-icon-button
+          aria-label="Toggle navigation menu"
+          (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <img src="/fuelguard-logo.png" alt="FuelGuard logo"/>
+  <span class="toolbar-title">FuelGuard</span>
+  <span class="spacer"></span>
+  <app-language-switcher/>
+  <button mat-icon-button
+          [attr.aria-label]="'notification-list.title' | translate"
+          routerLink="/notification/notification-list"
+          [matBadge]="notifications.unreadCount() || null"
+          matBadgeColor="warn"
+          matBadgeSize="small"
+          [matTooltip]="'notification-list.title' | translate"
+          class="toolbar-action">
+    <mat-icon>notifications</mat-icon>
+  </button>
+  <button mat-icon-button
+          [matMenuTriggerFor]="userMenu"
+          [attr.aria-label]="'profile.user' | translate"
+          [matTooltip]="'profile.user' | translate"
+          class="toolbar-action toolbar-user">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #userMenu="matMenu" xPosition="before" class="user-menu">
+    <div class="user-menu-head" (click)="$event.stopPropagation()">
+      <span class="user-menu-avatar" aria-hidden="true"><mat-icon>person</mat-icon></span>
+      <span class="user-menu-name">{{ iam.session()?.username }}</span>
+    </div>
+    <button mat-menu-item routerLink="/profile">
+      <mat-icon>manage_accounts</mat-icon>
+      <span>{{ 'profile.account-settings' | translate }}</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>{{ 'auth.logout' | translate }}</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<!-- BODY CON SIDENAV -->
+<div class="layout-body">
+  <mat-sidenav-container class="sidenav-container">
+
+    <!-- SIDENAV -->
+    <mat-sidenav
+      #drawer
+      [mode]="sidenavMode"
+      [opened]="sidenavOpened">
+
+      <!-- Navigation Menu -->
+      <nav class="nav-menu" aria-label="Main navigation">
+        @for (option of visibleOptions; track option.label) {
+
+          @if (!option.children) {
+            <!-- OPCIÓN SIMPLE (Sin sub-menú) -->
+            <a class="nav-item"
+                 [class.active]="isActive(option.link)"
+                 [matTooltip]="option.label | translate"
+                 matTooltipPosition="right"
+                 [routerLink]="option.link"
+                 (click)="closeNavigation()">
+              <div class="nav-icon-wrapper">
+                <mat-icon aria-hidden="true">{{ option.icon }}</mat-icon>
+              </div>
+              <span class="nav-label">{{ option.label | translate }}</span>
+              @if (isActive(option.link)) {
+                <div class="active-indicator"></div>
+              }
+            </a>
+          } @else {
+            <!-- OPCIÓN CON SUB-MENÚ (Acordeón) -->
+            <mat-expansion-panel
+              [expanded]="isActive(option.link)"
+              class="mat-elevation-z0 nav-expansion-panel">
+
+              <mat-expansion-panel-header class="nav-item-header">
+                <mat-panel-title class="nav-item-title">
+                  <div class="nav-icon-wrapper">
+                    <mat-icon aria-hidden="true">{{ option.icon }}</mat-icon>
+                  </div>
+                  <span class="nav-label">{{ option.label | translate }}</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <!-- Lista de Sub-elementos sin iconos -->
+              <div class="sub-menu-container">
+                @for (child of visibleChildren(option); track child.link) {
+                  <a class="sub-nav-item"
+                       [class.sub-active]="isActive(child.link, true)"
+                       [routerLink]="child.link"
+                       (click)="closeNavigation()">
+                    <span class="sub-nav-label">{{ child.label | translate }}</span>
+                  </a>
+                }
+              </div>
+            </mat-expansion-panel>
+          }
+        }
+      </nav>
+
+    </mat-sidenav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <mat-sidenav-content>
+      <div class="content-wrapper">
+        <router-outlet/>
+      </div>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+</div>

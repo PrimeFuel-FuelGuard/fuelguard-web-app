@@ -1,0 +1,121 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.title {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.mono {
+  font-family: 'Courier New', monospace;
+}
+
+.detail-card {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 16px;
+}
+
+.status-row h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+  margin-bottom: 16px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item.full {
+  grid-column: 1 / -1;
+}
+
+.item label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.item span {
+  color: #2c3e50;
+  font-size: 14px;
+}
+
+.item span.strong {
+  font-weight: 600;
+  color: #1e3a8a;
+  font-size: 16px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.empty {
+  text-align: center;
+  color: #7f8c8d;
+  padding: 48px;
+}
+
+mat-chip.created {
+  background-color: #e3f2fd !important;
+  color: #1565c0 !important;
+}
+
+mat-chip.dispatched {
+  background-color: #fff3e0 !important;
+  color: #e65100 !important;
+}
+
+mat-chip.delivered {
+  background-color: #e8f5e9 !important;
+  color: #2e7d32 !important;
+}
+
+mat-chip.closed {
+  background-color: #eceff1 !important;
+  color: #455a64 !important;
+}
+
+mat-chip.cancelled {
+  background-color: #ffebee !important;
+  color: #c62828 !important;
+}
+.assignment { margin-top:16px; padding:16px; border-top:1px solid #ddd; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px }
+.payment { margin-top:16px; padding:16px; border-top:1px solid #ddd; display:grid; gap:12px }
+.payment label { display:flex; flex-direction:column; gap:4px }
+.payment input,.payment select { padding:8px }
+.payment .error { color:#b42318 }
+.assignment label { display:flex; flex-direction:column; gap:4px }
+.assignment input,.assignment select { padding:8px }
+.assignment .error { grid-column:1/-1; color:#b42318 }
+.assignment-summary { grid-column:1/-1; padding:16px; border:1px solid #d1d5db; border-radius:8px; overflow-wrap:anywhere }
+.assignment-summary h4 { margin-top:0 }
+@media(max-width:600px){.assignment{grid-template-columns:1fr}}

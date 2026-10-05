@@ -1,0 +1,124 @@
+<div class="notification-list-container">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>
+        {{ 'notification-list.title' | translate }}
+        @if (store.unreadCount() > 0) {
+          <span class="unread-badge">{{ store.unreadCount() }}</span>
+        }
+      </h1>
+      <p>{{ 'notification-list.subtitle' | translate }}</p>
+    </div>
+
+    <div class="header-actions">
+      <button
+        mat-button
+        (click)="onShowAll()"
+        [disabled]="store.isLoading()"
+        [class.active-filter]="filterMode === 'all'"
+      >
+        <mat-icon>list</mat-icon>
+        {{ 'notification-list.show-all' | translate }}
+      </button>
+      <button
+        mat-button
+        (click)="onShowUnread()"
+        [disabled]="store.isLoading()"
+        [class.active-filter]="filterMode === 'unread'"
+      >
+        <mat-icon>mark_email_unread</mat-icon>
+        {{ 'notification-list.show-unread' | translate }}
+      </button>
+      <button mat-icon-button (click)="onRefresh()" [disabled]="store.isLoading()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onMarkAllAsRead()"
+        [disabled]="store.isLoading() || store.unreadCount() === 0"
+      >
+        <mat-icon>done_all</mat-icon>
+        {{ 'notification-list.mark-all-read' | translate }}
+      </button>
+    </div>
+  </header>
+
+  @if (store.isLoading()) {
+    <div class="loading-shade">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  }
+
+  @if (store.error()) {
+    <div class="error-container">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ store.error() | translate }}</p>
+    </div>
+  }
+
+  @if (store.successMsg()) {
+    <div class="success-container">
+      <mat-icon>check_circle</mat-icon>
+      <p>{{ store.successMsg() | translate }}</p>
+    </div>
+  }
+
+  <div class="notifications-panel">
+    @if (store.notificationList().length === 0 && !store.isLoading()) {
+      <div class="empty-state">
+        <mat-icon>notifications_off</mat-icon>
+        <p>{{ 'notification-list.empty' | translate }}</p>
+      </div>
+    } @else {
+      @for (notification of store.notificationList(); track trackById($index, notification)) {
+        <mat-card
+          class="notification-card"
+          [class.unread]="!notification.read"
+          [class]="getCategoryClass(notification)"
+          [class.clickable]="linkFor(notification)"
+          (click)="open(notification)"
+        >
+          <div class="notification-icon">
+            <mat-icon>{{ getIconFor(notification) }}</mat-icon>
+            @if (!notification.read) {
+              <span class="unread-dot"></span>
+            }
+          </div>
+
+          <div class="notification-body">
+            <div class="notification-header">
+              <mat-chip-set>
+                <mat-chip [class]="getTypeClass(notification.type)">
+                  {{ 'notification-type.' + notification.type.toLowerCase() | translate }}
+                </mat-chip>
+              </mat-chip-set>
+              <span class="notification-time">{{ timeAgo(notification.createdAt) }}</span>
+            </div>
+
+            <h2 class="notification-message">{{ notification.title }}</h2>
+            <p>{{ notification.message }}</p>
+
+            @if (notification.referenceId && referenceLabel(notification); as label) {
+              <p class="notification-meta">
+                <mat-icon>tag</mat-icon>
+                {{ label | translate }}:
+                <code>{{ notification.referenceId }}</code>
+              </p>
+            }
+          </div>
+
+          <div class="notification-actions">
+            @if (!notification.read) {
+            <button mat-icon-button (click)="onToggleRead(notification)" [matTooltip]="'notification-list.mark-read-tooltip' | translate">
+              <mat-icon>
+                mark_email_read
+              </mat-icon>
+            </button>
+            }
+          </div>
+        </mat-card>
+      }
+    }
+  </div>
+</div>

@@ -1,0 +1,40 @@
+.title {
+  margin: 16px 0;
+  color: #2c3e50;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+}
+
+.row .grow {
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.error {
+  color: #b3261e;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px;
+}

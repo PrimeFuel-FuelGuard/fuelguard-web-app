@@ -1,0 +1,225 @@
+/* ==================== TOOLBAR ==================== */
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 16px 0 24px;
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #e8eaed;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  color: #1e3a8a;
+}
+
+.toolbar img {
+  height: 40px;
+  width: auto;
+  margin-right: 12px;
+}
+
+.toolbar-title {
+  font-weight: 700;
+  font-size: 22px;
+  color: #1e3a8a;
+  letter-spacing: 0.5px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* ==================== LAYOUT BODY ==================== */
+.layout-body {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  height: calc(100vh - 64px);
+  overflow: hidden;
+  background: #f4f6f9;
+}
+
+.sidenav-container {
+  flex: 1;
+  height: 100%;
+}
+
+/* ==================== SIDENAV ==================== */
+mat-sidenav {
+  width: 280px;
+  background: #ffffff;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.08);
+  border-right: 1px solid #e8eaed;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-menu {
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Estilo para items principales */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #5f6368;
+  position: relative;
+}
+
+.nav-item, .sub-nav-item { text-decoration: none; }
+.sub-nav-item { display: block; }
+
+.nav-item:hover, .nav-item-header:hover {
+  background: #eff6ff !important;
+  color: #1e3a8a;
+}
+
+.nav-item.active {
+  background: #dbeafe;
+  color: #1e3a8a;
+  font-weight: 600;
+}
+
+.nav-icon-wrapper {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-item.active .nav-icon-wrapper {
+  background: rgba(30, 58, 138, 0.1);
+}
+
+.nav-icon-wrapper mat-icon {
+  font-size: 20px;
+}
+
+.nav-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.active-indicator {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60%;
+  background: #1e3a8a;
+  border-radius: 2px 0 0 2px;
+}
+
+/* ==================== SUB-MENU ==================== */
+.sub-menu-container {
+  margin-left: 28px;
+  padding-left: 12px;
+  border-left: 2px solid #e8eaed;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sub-nav-item {
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #5f6368;
+}
+
+.sub-nav-item:hover {
+  background: #f1f3f4;
+  color: #1e3a8a;
+}
+
+.sub-nav-label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.sub-nav-item.sub-active {
+  background: rgba(245, 158, 11, 0.08);
+  color: #f59e0b;
+}
+
+.sub-nav-item.sub-active .sub-nav-label {
+  font-weight: 700;
+}
+
+/* ==================== EXPANSION PANEL RESET ==================== */
+.nav-expansion-panel {
+  background: transparent !important;
+}
+
+.nav-item-header {
+  height: 48px !important;
+  padding: 0 10px !important;
+  border-radius: 10px !important;
+}
+
+.nav-item-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+::ng-deep .nav-expansion-panel .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+/* ==================== CONTENT ==================== */
+mat-sidenav-content {
+  background: #f4f6f9;
+}
+
+.content-wrapper {
+  padding: 24px;
+  min-height: 100%;
+}
+
+/* Acciones de la derecha: mismo tamaño, mismo color, mismo ritmo. */
+.toolbar app-language-switcher { margin-right: 8px; }
+.toolbar-action { --mat-icon-button-icon-color: #1e3a8a; --mat-icon-button-state-layer-color: #1e3a8a; margin-left: 4px; }
+.toolbar-action:focus-visible { outline: 2px solid #1e3a8a; outline-offset: -2px; }
+.toolbar-user .mat-icon { width: 32px; height: 32px; font-size: 32px; }
+
+/* Menú de usuario (el panel se pinta en el overlay, fuera del componente). */
+::ng-deep .user-menu.mat-mdc-menu-panel { min-width: 240px; border-radius: 12px; }
+::ng-deep .user-menu .mat-mdc-menu-content { padding: 0 0 8px; }
+.user-menu-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; padding: 14px 16px; border-bottom: 1px solid #e5e7eb; cursor: default; }
+.user-menu-avatar { display: grid; place-items: center; width: 36px; height: 36px; flex: none; border-radius: 50%; background: #eef2ff; color: #1e3a8a; }
+.user-menu-name { min-width: 0; overflow: hidden; color: #111827; font-size: 0.9375rem; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+::ng-deep .user-menu .mat-mdc-menu-item .mat-icon { color: #4b5563; }
+
+@media (max-width: 560px) {
+  .toolbar { padding: 0 8px; }
+  .toolbar img { height: 32px; margin-right: 8px; }
+  .toolbar-title { display: none; }
+  .toolbar app-language-switcher { margin-right: 0; }
+  .toolbar-action { margin-left: 0; }
+  .content-wrapper { padding: 16px; }
+}

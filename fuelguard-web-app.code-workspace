@@ -1,0 +1,11 @@
+{
+  "folders": [
+    {
+      "name": "fuelguard-web-app",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "window.title": "fuelguard-web-app — ${dirty}${activeEditorMedium}${separator}${rootName}"
+  }
+}

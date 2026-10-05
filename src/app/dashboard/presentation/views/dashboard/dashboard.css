@@ -1,0 +1,42 @@
+:host { display: block; }
+.dashboard { display: grid; gap: 1.5rem; max-width: 1200px; margin: 0 auto; color: var(--fg-text, #0f172a); }
+.heading { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.25rem; margin-bottom: 0.5rem; }
+.heading h1 { margin: 0; font-size: 1.875rem; font-weight: 800; letter-spacing: -0.02em; color: #0f172a; text-wrap: balance; }
+.heading p { margin: .4rem 0 0; color: #64748b; max-width: 65ch; font-size: 0.9375rem; line-height: 1.5; }
+.actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.actions a, .state button { border: 1px solid #cbd5e1; border-radius: 10px; background: white; color: #1e3a8a; padding: .6rem 1.2rem; text-decoration: none; font-weight: 600; font-size: 0.875rem; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.actions a:hover, .state button:hover { background: #f8fafc; border-color: #1e3a8a; }
+.actions a.primary, .state button { background: #1e3a8a; color: white; border-color: #1e3a8a; box-shadow: 0 2px 6px rgba(30, 58, 138, 0.25); }
+.actions a.primary:hover { background: #1e40af; }
+.actions a:focus-visible, .state button:focus-visible, .recent a:focus-visible { outline: 3px solid #1e3a8a; outline-offset: 2px; }
+.state { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 1.5rem; align-items: start; }
+.main { display: grid; gap: 1.5rem; min-width: 0; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+.kpis article, .panel { background: white; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.35rem; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04); transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.kpis article:hover, .panel:hover { box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06); }
+.kpis article.lead { grid-column: 1 / -1; background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%); border-color: #bfdbfe; }
+.kpis h2, .panel h2 { margin: 0; font-size: .875rem; font-weight: 600; color: #64748b; letter-spacing: 0.01em; text-transform: uppercase; }
+.panel h2 { color: #0f172a; text-transform: none; font-size: 1.125rem; font-weight: 700; }
+.kpis .value { margin: .6rem 0 0; font-size: 2.125rem; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; color: #0f172a; letter-spacing: -0.02em; }
+.kpis .lead .value { font-size: 2.75rem; color: #1e3a8a; }
+.kpis small { display: block; margin-top: .4rem; color: #64748b; font-size: 0.8125rem; }
+.status-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .75rem; list-style: none; padding: 0; margin: 1.25rem 0 0; }
+.status-list li { display: flex; justify-content: space-between; align-items: center; gap: .5rem; padding: .75rem 1rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; font-weight: 500; font-size: 0.875rem; }
+.status-list li.zero { color: #94a3b8; }
+.recent ul { list-style: none; margin: .875rem 0; padding: 0; display: grid; gap: .6rem; }
+.recent li a { display: grid; grid-template-columns: auto 1fr; gap: .2rem .75rem; padding: .75rem 1rem; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0; color: inherit; text-decoration: none; transition: background 0.15s ease, border-color 0.15s ease; }
+.recent li a:hover { background: #f1f5f9; border-color: #cbd5e1; }
+.recent .id { font-weight: 700; color: #1e3a8a; font-size: 0.875rem; }
+.recent .status { justify-self: end; color: #2563eb; font-size: .8125rem; font-weight: 600; }
+.recent .meta { grid-column: 1 / -1; color: #64748b; font-size: .8125rem; }
+.recent .all { color: #2563eb; font-weight: 600; font-size: 0.875rem; text-decoration: none; }
+.recent .all:hover { text-decoration: underline; }
+.muted { color: #64748b; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpis .value { font-size: 1.5rem; } .kpis .lead .value { font-size: 2rem; } }
+
+.view-switch { display: flex; gap: .5rem; margin: .875rem 0; }
+.view-switch button { border: 1px solid #cbd5e1; background: white; border-radius: 8px; padding: .35rem .9rem; cursor: pointer; font-size: 0.8125rem; font-weight: 600; color: #475569; transition: all 0.15s ease; }
+.view-switch button:hover { background: #f8fafc; }
+.view-switch button.active { background: #1e3a8a; border-color: #1e3a8a; color: white; }
+.chart { position: relative; height: 260px; }

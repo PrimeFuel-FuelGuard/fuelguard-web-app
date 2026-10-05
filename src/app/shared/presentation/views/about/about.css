@@ -1,0 +1,20 @@
+.logo {
+  height: 10em;
+}
+
+.container-with-spacing {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.container-with-spacing h1 {
+  color: #1e3a8a;
+  margin-bottom: 1.5rem;
+}
+
+.container-with-spacing p {
+  color: #5f6368;
+  line-height: 1.6;
+  font-size: 1rem;
+}
