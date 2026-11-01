@@ -8,6 +8,7 @@ export interface AdminUser { id: number; username: string; roles: string[]; comp
 export interface ApiMetric { routeKey: string; version: string; handler: string; count: number; lastSeen: string | null; distinctCallers: number; }
 export interface TransportEvidence { deliveryId: number; samples: unknown[]; }
 
+/** Servicio de administración para métricas de API, usuarios y evidencias de transporte. */
 @Injectable({ providedIn: 'root' })
 export class AdminApi {
   private readonly http = inject(HttpClient);
