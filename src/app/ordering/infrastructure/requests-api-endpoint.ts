@@ -5,6 +5,7 @@ import { RequestAssembler } from './request-assembler';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
+/** CRUD genérico sobre `/replenishment-requests`. Hoy ninguna vista lo usa: las pantallas llaman a `OrderingApi`. */
 export class RequestsApiEndpoint extends BaseApiEndpoint<Request, RequestResource, RequestsResponse, RequestAssembler> {
 
   constructor(http: HttpClient) {
