@@ -17,16 +17,21 @@ export interface ProviderPayment {
   status: PaymentStatus; paymentMethod: PaymentMethod; createdAt: string; updatedAt: string; paidAt: string | null;
 }
 
+/** Cliente HTTP del contexto de pedidos: solicitudes, órdenes, pagos y consultas de catálogo. Cuelga de `environment.serverBasePath`. */
 @Injectable({ providedIn: 'root' })
 export class OrderingApi extends ErrorHandlingEnabledBaseType {
   private readonly http = inject(HttpClient);
   private readonly base = environment.serverBasePath;
 
+  /** Solicitudes visibles para el usuario actual (vista del comprador). */
   requests(): Observable<Request[]> { return this.http.get<Request[]>(`${this.base}/replenishment-requests`); }
+  /** Bandeja de solicitudes del distribuidor. */
   requestInbox(): Observable<Request[]> { return this.http.get<Request[]>(`${this.base}/replenishment-requests/inbox`); }
   request(id: number): Observable<Request> { return this.http.get<Request>(`${this.base}/replenishment-requests/${id}`); }
   createRequest(payload: CreateRequest): Observable<Request> { return this.http.post<Request>(`${this.base}/replenishment-requests`, { ...payload, source: 'MANUAL' }); }
+  /** El distribuidor acepta una solicitud pendiente (POST sin cuerpo). */
   acceptRequest(id: number): Observable<Request> { return this.http.post<Request>(`${this.base}/replenishment-requests/${id}/accept`, {}); }
+  /** El distribuidor rechaza una solicitud pendiente y envía el motivo en el cuerpo. */
   rejectRequest(id: number, reason: string): Observable<Request> { return this.http.post<Request>(`${this.base}/replenishment-requests/${id}/reject`, { reason }); }
   cancelRequest(id: number): Observable<Request> { return this.http.post<Request>(`${this.base}/replenishment-requests/${id}/cancel`, {}); }
 
