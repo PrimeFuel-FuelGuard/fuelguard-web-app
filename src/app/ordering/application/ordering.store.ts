@@ -6,6 +6,10 @@ import { Order } from '../domain/model/order.entity';
 import { OrderingApi, Payment } from '../infrastructure/ordering-api';
 import { IamStore } from '../../iam/application/iam.store';
 
+/**
+ * Estado reactivo (signals) de solicitudes, órdenes y pagos. Valida en cliente el rol y la pertenencia
+ * antes de cada acción; las vistas lo declaran en `providers`, así que cada una tiene su propia instancia.
+ */
 @Injectable({ providedIn: 'root' })
 export class OrderingStore {
   private readonly api = inject(OrderingApi);
@@ -42,6 +46,7 @@ export class OrderingStore {
     this.api.providers().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({ next: rows => this.providerNames.set(Object.fromEntries(rows.map(row => [row.id, row.name]))), error: () => undefined });
     this.api.allProducts().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({ next: rows => this.productNames.set(Object.fromEntries(rows.map(row => [row.id, row.name]))), error: () => undefined });
   }
+  /** Carga la bandeja del distribuidor o las solicitudes del comprador, según el rol. */
   loadRequests(): void {
     this.run(this.isProvider() ? this.api.requestInbox() : this.api.requests(), value => this.requestsState.set(value));
   }
@@ -82,6 +87,7 @@ export class OrderingStore {
     this.orderRequest = this.run(this.api.order(id), order => this.ordersState.set([order]));
   }
   createRequest(value: CreateRequest, done: () => void): void { this.mutate(this.api.createRequest(value), () => { this.loadRequests(); done(); }); }
+  /** Acepta una solicitud pendiente propia del distribuidor y recarga la lista y la orden generada. */
   acceptRequest(id: number): void {
     if (!this.canDecideRequest(id)) return;
     this.mutate(this.api.acceptRequest(id), request => {
@@ -91,6 +97,7 @@ export class OrderingStore {
       this.notice.set('request-list.accepted'); // al final: run() limpia el aviso
     });
   }
+  /** Rechaza una solicitud pendiente propia; el motivo es obligatorio y admite hasta 240 caracteres. */
   rejectRequest(id: number, reason: string): void {
     if (!this.canDecideRequest(id) || !reason.trim() || reason.trim().length > 240) return;
     this.mutate(this.api.rejectRequest(id, reason.trim()), () => { this.loadRequests(); this.notice.set('request-list.rejected'); });
@@ -111,6 +118,7 @@ export class OrderingStore {
     this.mutate(this.api.cancelOrder(id), order => this.replaceOrder(order));
   }
 
+  /** Solo el distribuidor dueño puede decidir una solicitud `PENDING`, y no mientras haya otra operación en curso. */
   private canDecideRequest(id: number): boolean {
     return this.isProvider() && !this.loading() && this.requests().some(row => row.id === id && row.status === 'PENDING' && row.providerId === this.iam.providerId());
   }
