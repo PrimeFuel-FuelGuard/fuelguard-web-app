@@ -14,6 +14,7 @@ import { Request } from '../../../domain/model/request.entity';
 
 registerLocaleData(localeEs);
 
+/** Devuelve las claves de los campos obligatorios ausentes o inválidos de una solicitud; vacío si está completa. */
 export function missingRequestFields(request: Request): string[] {
   const fields: string[] = [];
   if (!request.organizationId || request.organizationId < 1) fields.push('organization');
@@ -30,6 +31,7 @@ export function missingRequestFields(request: Request): string[] {
   return fields;
 }
 
+/** Lista de solicitudes con filtros; el distribuidor puede aceptar o rechazar las pendientes desde el detalle expandido. */
 @Component({ selector: 'app-request-list', providers: [OrderingStore], imports: [CurrencyPipe, RouterLink, DatePipe, FormsModule, TranslatePipe, MatButtonModule, MatIconModule], templateUrl: './request-list.html', styleUrl: './request-list.css' })
 export class RequestList {
   readonly store = inject(OrderingStore);
@@ -58,8 +60,10 @@ export class RequestList {
   refresh(): void { if (!this.store.loading()) { this.store.loadRequests(); this.store.loadNames(); } }
   clearFilters(): void { this.search.set(''); this.status.set(''); this.incompleteOnly.set(false); }
   toggleTracking(id: number): void { this.expandedId.set(this.expandedId() === id ? null : id); this.decision.set(null); this.rejectionReason = ''; }
+  /** Solo el distribuidor destinatario puede decidir una solicitud pendiente, sin otra carga en curso. */
   canDecide(row: Request): boolean { return this.store.isProvider() && this.iam.providerId() === row.providerId && row.status === 'PENDING' && !this.store.loading(); }
   prepareDecision(action: 'accept' | 'reject'): void { this.decision.set(action); this.rejectionReason = ''; }
+  /** Aceptar exige una solicitud completa; rechazar exige un motivo de hasta 240 caracteres. */
   submitDecision(row: Request): void {
     if (!this.canDecide(row)) return;
     if (this.decision() === 'accept' && !missingRequestFields(row).length) this.store.acceptRequest(row.id);
