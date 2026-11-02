@@ -80,10 +80,5 @@ export class NotificationStore {
     });
   }
 
-  clearMessages(): void { this.errorMessage.set(''); this.successMessage.set(''); }
-
-  private fail(error: { message?: string }): void {
-    this.errorMessage.set(error.message || 'errors.generic');
-    this.loading.set(false);
-  }
+ 
 }
