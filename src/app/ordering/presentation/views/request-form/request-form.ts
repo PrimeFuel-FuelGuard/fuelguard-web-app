@@ -13,6 +13,7 @@ import { EquipmentStore } from '../../../../equipment/application/equipment.stor
 import { Site, Tank } from '../../../../equipment/domain/model/equipment.entity';
 import { FuelProduct } from '../../../../inventory/domain/model/fuel-product.entity';
 
+/** Formulario para crear una solicitud manual: elige distribuidor, producto de su catálogo, cantidad, fecha y dirección. */
 @Component({ selector: 'app-request-form', providers: [OrderingStore], imports: [TranslatePipe, ReactiveFormsModule, MatFormField, MatLabel, MatError, MatInput, MatButton, MatSelect, MatOption], templateUrl: './request-form.html', styleUrl: './request-form.css' })
 export class RequestForm {
   private readonly fb = inject(FormBuilder);
@@ -51,6 +52,7 @@ export class RequestForm {
     const address = this.sites().find(s => s.id === this.form.controls.siteId.value)?.address;
     if (address) this.form.controls.deliveryAddress.setValue(address.slice(0, 255));
   }
+  /** Al cambiar de distribuidor carga su catálogo activo; si está vacío avisa al distribuidor. */
   onProviderChange(): void {
     this.productsRequest?.unsubscribe();
     const id = this.form.controls.providerId.value;
@@ -72,6 +74,7 @@ export class RequestForm {
     });
   }
   ngOnDestroy(): void { this.productsRequest?.unsubscribe(); }
+  /** Envía la solicitud solo si el formulario es válido y el producto pertenece al catálogo cargado. */
   submit(): void {
     this.form.markAllAsTouched();
     const customerAccountId = this.customerAccountId();
