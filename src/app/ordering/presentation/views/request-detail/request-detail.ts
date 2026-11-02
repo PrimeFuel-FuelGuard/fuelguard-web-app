@@ -18,6 +18,7 @@ registerLocaleData(localeEs);
 
 type RequestAction = 'cancel' | 'accept' | 'reject';
 
+/** Detalle de una solicitud: el comprador puede cancelarla y el distribuidor aceptarla o rechazarla, con confirmación en diálogo. */
 @Component({
   selector: 'app-request-detail',
   providers: [OrderingStore],
@@ -81,12 +82,14 @@ export class RequestDetail {
     this.refresh.next();
   }
 
+  /** Cancelar es del comprador; aceptar y rechazar, del distribuidor dueño. Todas requieren estado `PENDING`. */
   canAct(action: RequestAction): boolean {
     const request = this.request();
     return !!request && request.status === 'PENDING' && !this.loading() && !this.acting()
       && (action === 'cancel' ? this.iam.isBuyer() : this.iam.isProvider() && this.iam.providerId() === request.providerId);
   }
 
+  /** Abre el diálogo de confirmación y, si se acepta, ejecuta la acción y recarga la solicitud. */
   confirmAction(action: RequestAction): void {
     if (!this.canAct(action) || this.action()) return;
     const requestId = this.request()!.id;
@@ -111,6 +114,7 @@ export class RequestDetail {
     });
   }
 
+  /** Convierte el estado HTTP en la clave i18n del mensaje que ve el usuario. */
   private errorKey(error: HttpErrorResponse): string {
     if (error.status === 0) return 'errors.network';
     if (error.status >= 500) return 'errors.server';

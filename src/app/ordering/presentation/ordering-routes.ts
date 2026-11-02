@@ -9,6 +9,7 @@ const orderList = () => import('./views/order-list/order-list').then(m => m.Orde
 const paymentHistory = () => import('./views/payment-history/payment-history').then(m => m.PaymentHistory);
 const orderDetail = () => import('./views/order-detail/order-detail').then(m => m.OrderDetail);
 
+/** Rutas de `/ordering`; crear solicitudes y ver el historial de pagos exigen `buyerGuard`, el resto cuelga del guard del padre. */
 const orderingRoutes: Routes = [
   {
     path: '',

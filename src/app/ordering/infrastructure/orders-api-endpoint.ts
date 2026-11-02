@@ -5,6 +5,7 @@ import { OrderResource, OrdersResponse } from './orders-response';
 import { OrderAssembler } from './order-assembler';
 import { Order } from '../domain/model/order.entity';
 
+/** CRUD genérico sobre `/fuel-orders`. Hoy ninguna vista lo usa: las pantallas llaman a `OrderingApi`. */
 export class OrdersApiEndpoint extends BaseApiEndpoint<Order, OrderResource, OrdersResponse, OrderAssembler> {
 
   constructor(http: HttpClient) {

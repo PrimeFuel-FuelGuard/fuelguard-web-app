@@ -79,6 +79,7 @@ export class ProviderPayments {
   protected clearDates(): void { this.from.set(''); this.to.set(''); this.page.set(0); this.load(); }
   protected changePage(delta: number): void { this.page.set(Math.max(0, Math.min(this.pageCount() - 1, this.page() + delta))); }
 
+  /** Pide la referencia de operación en un diálogo y completa el pago `PENDING`. */
   protected requestComplete(p: ProviderPayment): void {
     if (p.status !== 'PENDING' || this.busyId() !== null || this.confirming) return;
     this.confirming = true;
@@ -92,6 +93,7 @@ export class ProviderPayments {
     });
   }
 
+  /** Pide confirmación y reembolsa un pago `COMPLETED`. */
   protected requestRefund(p: ProviderPayment): void {
     if (p.status !== 'COMPLETED' || this.busyId() !== null || this.confirming) return;
     this.confirming = true;
@@ -104,6 +106,7 @@ export class ProviderPayments {
     });
   }
 
+  /** Ejecuta la operación sobre el pago, marca la fila como ocupada y recarga la lista al terminar bien. */
   private run(p: ProviderPayment, op: ReturnType<OrderingApi['completePayment']>, success: string): void {
     this.busyId.set(p.id);
     this.actionError.set(null);

@@ -9,6 +9,7 @@ import { Payment } from '../../../infrastructure/ordering-api';
 import { MatButton } from '@angular/material/button';
 import { OrderingStore } from '../../../application/ordering.store';
 
+/** Historial de pagos del comprador: los pendientes van primero y luego los más recientes. */
 @Component({ selector: 'app-payment-history', providers: [OrderingStore], imports: [CurrencyPipe, DatePipe, RouterLink, TranslatePipe, MatButton, MatDialogModule, MatProgressSpinnerModule], templateUrl: './payment-history.html', styleUrl: './payment-history.css' })
 export class PaymentHistory {
   private readonly dialog = inject(MatDialog);
@@ -26,6 +27,7 @@ export class PaymentHistory {
       || (b.paidAt ? Date.parse(b.paidAt) : 0) - (a.paidAt ? Date.parse(a.paidAt) : 0)
       || b.id - a.id));
 
+  /** Pide confirmación y, si se acepta, reembolsa un pago `COMPLETED`. */
   requestRefund(payment: Payment): void {
     if (payment.status !== 'COMPLETED' || this.confirming || this.store.refundingId() !== null || this.store.loading()) return;
     this.confirming = true;

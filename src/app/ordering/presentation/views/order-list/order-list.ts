@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { OrderingStore } from '../../../application/ordering.store';
 
+/** Lista de órdenes con búsqueda por número y filtro de estado; los contadores omiten los estados sin órdenes. */
 @Component({ selector: 'app-order-list', providers: [OrderingStore], imports: [CurrencyPipe, RouterLink, FormsModule, TranslatePipe, MatButton, MatFormField, MatInput, MatLabel], templateUrl: './order-list.html', styleUrl: './order-list.css' })
 export class OrderList {
   readonly store = inject(OrderingStore);

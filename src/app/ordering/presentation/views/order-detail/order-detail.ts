@@ -22,6 +22,7 @@ import { DeliveryRecommendation } from '../../../../fulfillment/domain/model/pro
 import { HttpErrorResponse } from '@angular/common/http';
 import { OrderingApi, Payment, PaymentMethod } from '../../../infrastructure/ordering-api';
 
+/** Detalle de una orden: confirmar o cancelar, registrar el pago (comprador) y asignar chofer y cisterna (distribuidor). */
 @Component({ selector: 'app-order-detail', providers: [OrderingStore], imports: [CurrencyPipe, DatePipe, DecimalPipe, FormsModule, TranslatePipe, MatButton, MatIconButton, MatIcon, MatCard, MatCardContent, MatChip, MatChipSet, MatProgressSpinner, MatError, MatTooltip], templateUrl: './order-detail.html', styleUrl: './order-detail.css' })
 export class OrderDetail {
   readonly store = inject(OrderingStore);
@@ -195,12 +196,14 @@ export class OrderDetail {
       error: () => { this.resourcesLoading.set(false); this.resourcesError.set(true); },
     });
   }
+  /** Convierte litros o galones (1 gal = 3,785411784 L) a litros; devuelve `null` si la unidad o la cantidad no son válidas. */
   private toLitres(amount: number, unit: string): number | null {
     if (!Number.isFinite(amount) || amount <= 0) return null;
     const code = (unit ?? '').trim().toUpperCase();
     return ['L', 'LITRE', 'LITRES', 'LITER', 'LITERS', 'LITRO', 'LITROS'].includes(code) ? amount
       : ['GAL', 'GALLON', 'GALLONS', 'GALON', 'GALONES'].includes(code) ? amount * 3.785411784 : null;
   }
+  /** Clave i18n del motivo por el que una cisterna no se puede asignar, o `null` si es apta para la orden. */
   tankerBlockReason(t: Tanker): string | null {
     if (!this.eligibleTankerIds.has(t.id)) return 'fulfillment.assignment.ineligible';
     const capacity = this.toLitres(t.capacity, t.unit);
@@ -261,6 +264,7 @@ export class OrderDetail {
     const d = new Date(iso);
     return new Date(d.getTime() - d.getTimezoneOffset() * 60_000).toISOString().slice(0, 16);
   }
+  /** Crea la entrega tras la revisión; un 409 recarga chofer y cisterna porque la disponibilidad cambió. */
   assign(orderId: number): void {
     if (!this.assignmentReview() || !this.assignmentValid || this.assignmentSubmitting() || orderId !== this.order()?.id) return;
     this.assignmentError = '';
